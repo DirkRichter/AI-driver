@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>AI Driver</title>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/mathjs@11.7.0/lib/browser/math.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"> </script> -->
+    <script src="math.js" type="text/javascript"></script> 
+    <!-- <script src="tf.js" type="text/javascript"></script>  -->
+  </head>
+  <body>
+
+  <table>
+    <tr>
+      <td><canvas id="canvas" width="800" height="800" ></canvas></td>
+      <td><canvas id="canvas2" width="400" height="800" style="border: 1px solid black;"></canvas></td>
+    </tr>
+    <tr>
+      <td>
+        <fieldset  style="width: 770px;">
+          <legend>Map</legend>
+          <input id="file" style="display:none;" type="file" onchange="trackMap.load(this.files[0]);">
+          <button onclick="document.getElementById('file').click()">Load</button>
+          <button onclick="trackMap.save('trackmap.json')">Save</button>
+          <button onclick="trackMap.clear();trackmap_ui.refresh();">Clear</button>
+          <a href="" id="a" style="display:none;"></a>&nbsp;
+          Click + hold, then move the mouse to paint a <b>wall</b>.<br>
+          <input type="checkbox" id="checkbox" onchange="trackmap_ui.toggleShowSensors();" checked>
+          <label for="checkbox">show sensors</label>&nbsp;
+          <input type="checkbox" id="checkbox2" onchange="trackmap_ui.toggleShowWallDistances();">
+          <label for="checkbox2">show wall distances</label>&nbsp;
+          <input type="number" id="sensor-amount" min="2" max="20" value="2" style="width:2.5em" onchange="trackmap_ui.changeSensorAmount(this.value);neuro_ui.changeInputAmount(this.value);">
+          <label for="sensor-amount">sensors</label>&nbsp;
+  
+        </fieldset>  
+      </td>
+      <td>
+        <fieldset style="width: 370px;">
+          <legend>Neuronal Net</legend>
+          <input id="file2" style="display:none;" type="file" onchange="neuro_ui.load(this.files[0]);">
+          <button onclick="document.getElementById('file2').click()">Load</button>
+          <button onclick="neuro_ui.save('net.json')">Save</button>
+          <button onclick="neuro_ui.randomize();">Randomize</button>
+          <a href="" id="a2" style="display:none;"></a>
+          <button onclick="trainer.train();">Train</button>
+          <button onclick="neuro_ui.drive(trackmap_ui);">Drive car</button>
+          <button onclick="neuro_ui.stop(); trainer.stop();">Stop</button>&nbsp;
+  
+          <input type="number" id="layer-amount" min="1" max="20" value="2" style="width:2.5em" onchange="neuro_ui.changeLayerAmount(this.value);">
+          <label for="layer-amount">hidden layers</label>&nbsp;
+          <input type="number" id="layer-size" min="1" max="20" value="4" style="width:2.5em" onchange="neuro_ui.changeLayerSize(this.value);">
+          <label for="layer-size">layer size</label>&nbsp;
+          <input type="checkbox" id="show_training" onchange="trainer.toggleShowTraining();">
+          <label for="show_training">show training</label>&nbsp;
+        </fieldset>  
+      </td>
+    </tr>
+  </table>
+
+    
+        <br>Use keys <b>Left</b>, <b>Right</b> and <b>Up</b> to drive the car manually.
+
+    <script src="driver.js"></script>
+</body>
+</html>
